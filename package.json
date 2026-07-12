@@ -8,6 +8,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
+    "test": "node --test",
     "db:setup": "node --env-file=.env scripts/db-setup.ts"
   },
   "dependencies": {
