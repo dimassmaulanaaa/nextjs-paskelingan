@@ -1,6 +1,6 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { groupItems, type Item } from "../lib/catalog.ts";
+import { groupItems, type Item } from "../lib/catalog-shared.ts";
 
 const items: Item[] = [
   { id: 1, name: "Piring", unit_price: 200, group_name: "Peralatan Makan", sort_order: 1 },
