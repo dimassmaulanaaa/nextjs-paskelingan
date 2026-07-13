@@ -5,6 +5,9 @@ import {
   createHmac,
 } from "node:crypto";
 
+export const SESSION_COOKIE = "paskelingan_admin";
+export const SESSION_MAX_AGE = 60 * 60 * 8; // 8 jam
+
 // --- Password: scrypt + salt, format "salt:hash" (hex) ---
 
 export function hashPassword(password: string): string {
