@@ -27,3 +27,27 @@ export const KEYWORDS = [
   "Sewa piring gelas Klaten",
   "Sewa piring gelas Ceper",
 ];
+
+// URL kanonik situs; override via NEXT_PUBLIC_SITE_URL saat deploy.
+export const SITE_URL =
+  process.env.NEXT_PUBLIC_SITE_URL ?? "https://paskelingan.vercel.app";
+
+// JSON-LD LocalBusiness untuk SEO lokal.
+export function jsonLdLocalBusiness() {
+  return {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    name: ORG.nama,
+    url: SITE_URL,
+    foundingDate: ORG.foundingDate,
+    telephone: `+${ORG.wa}`,
+    address: {
+      "@type": "PostalAddress",
+      streetAddress: `${ORG.alamat.dukuh}, ${ORG.alamat.desa}`,
+      addressLocality: ORG.alamat.kabupaten,
+      addressRegion: ORG.alamat.provinsi,
+      addressCountry: "ID",
+    },
+    areaServed: [...ORG.areaLayanan],
+  };
+}

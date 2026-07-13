@@ -12,15 +12,27 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-import { ORG, ALAMAT_LENGKAP, KEYWORDS } from "@/lib/seo";
+import { ORG, ALAMAT_LENGKAP, KEYWORDS, SITE_URL } from "@/lib/seo";
+
+const judul = `${ORG.nama} — ${ORG.alamat.desa}, Klaten`;
+const deskripsi = `${ORG.nama} di ${ALAMAT_LENGKAP}. Profil organisasi & sewa bolopecah (piring, gelas, mangkuk) untuk hajatan di Ceper, Klaten.`;
 
 export const metadata: Metadata = {
+  metadataBase: new URL(SITE_URL),
   title: {
-    default: `${ORG.nama} — ${ORG.alamat.desa}, Klaten`,
+    default: judul,
     template: `%s — ${ORG.nama}`,
   },
-  description: `${ORG.nama} di ${ALAMAT_LENGKAP}. Profil organisasi & sewa bolopecah (piring, gelas, mangkuk) untuk hajatan di Ceper, Klaten.`,
+  description: deskripsi,
   keywords: [...KEYWORDS],
+  openGraph: {
+    title: judul,
+    description: deskripsi,
+    url: SITE_URL,
+    siteName: ORG.nama,
+    locale: "id_ID",
+    type: "website",
+  },
 };
 
 export default function RootLayout({
