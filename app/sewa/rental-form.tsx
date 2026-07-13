@@ -17,6 +17,7 @@ export function RentalForm({ items }: { items: Item[] }) {
   useEffect(() => {
     const d = new Date();
     const local = new Date(d.getTime() - d.getTimezoneOffset() * 60000);
+    // eslint-disable-next-line
     setToday(local.toISOString().split("T")[0]);
   }, []);
 
