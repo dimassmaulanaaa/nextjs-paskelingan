@@ -10,6 +10,12 @@ export type Item = {
 
 export type ItemGroup = { name: string; items: Item[] };
 
+// Harga satuan terendah di katalog (untuk teaser "mulai RpX"). 0 bila kosong.
+export function hargaTerendah(items: Item[]): number {
+  if (items.length === 0) return 0;
+  return Math.min(...items.map((i) => i.unit_price));
+}
+
 // Kelompokkan item per group_name, urutan grup mengikuti kemunculan pertama.
 export function groupItems(items: Item[]): ItemGroup[] {
   const groups: ItemGroup[] = [];

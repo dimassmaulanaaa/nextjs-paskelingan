@@ -1,6 +1,6 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { groupItems, type Item } from "../lib/catalog-shared.ts";
+import { groupItems, hargaTerendah, type Item } from "../lib/catalog-shared.ts";
 
 const items: Item[] = [
   { id: 1, name: "Piring", unit_price: 200, group_name: "Peralatan Makan", sort_order: 1 },
@@ -26,4 +26,12 @@ test("groupItems isi tiap grup dengan item yang benar", () => {
 
 test("groupItems tangani list kosong", () => {
   assert.deepEqual(groupItems([]), []);
+});
+
+test("hargaTerendah ambil unit_price terkecil", () => {
+  assert.equal(hargaTerendah(items), 100);
+});
+
+test("hargaTerendah list kosong = 0", () => {
+  assert.equal(hargaTerendah([]), 0);
 });
