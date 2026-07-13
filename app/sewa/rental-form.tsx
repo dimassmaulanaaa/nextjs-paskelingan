@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { groupItems, type Item } from "@/lib/catalog-shared";
 import { formatRupiah } from "@/lib/format";
 import { hitungSubtotal, hitungTotal, validateRental } from "@/lib/rental";
@@ -11,7 +11,14 @@ export function RentalForm({ items }: { items: Item[] }) {
   const [qtys, setQtys] = useState<Record<number, number>>({});
   const [error, setError] = useState("");
 
-  const today = new Date().toISOString().split("T")[0];
+  // Hitung "hari ini" di client (waktu lokal, hindari UTC shift & hydration
+  // mismatch — halaman ini prerender static).
+  const [today, setToday] = useState("");
+  useEffect(() => {
+    const d = new Date();
+    const local = new Date(d.getTime() - d.getTimezoneOffset() * 60000);
+    setToday(local.toISOString().split("T")[0]);
+  }, []);
 
   const groups = groupItems(items);
 
