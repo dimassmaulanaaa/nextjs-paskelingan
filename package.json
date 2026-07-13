@@ -9,7 +9,8 @@
     "start": "next start",
     "lint": "eslint",
     "test": "node --test",
-    "db:setup": "node --env-file=.env scripts/db-setup.ts"
+    "db:setup": "node --env-file=.env scripts/db-setup.ts",
+    "hash-password": "node scripts/hash-password.ts"
   },
   "dependencies": {
     "@neondatabase/serverless": "^1.1.0",
