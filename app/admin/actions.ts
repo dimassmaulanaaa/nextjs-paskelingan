@@ -5,12 +5,21 @@ import { redirect } from "next/navigation";
 import {
   verifyPassword,
   signSession,
+  verifySession,
   SESSION_COOKIE,
   SESSION_MAX_AGE,
 } from "@/lib/auth";
 
 import { revalidatePath } from "next/cache";
 import { createItem, updateItem, deleteItem } from "@/lib/catalog";
+
+async function requireAuth() {
+  const token = (await cookies()).get(SESSION_COOKIE)?.value;
+  const secret = process.env.SESSION_SECRET;
+  if (!token || !secret) throw new Error("Unauthorized");
+  const session = verifySession(token, secret);
+  if (!session) throw new Error("Unauthorized");
+}
 
 // (auth actions existing...)
 export async function login(_prev: unknown, formData: FormData) {
@@ -53,6 +62,7 @@ function parseItemForm(formData: FormData) {
 
 export async function actionCreateItem(_prev: unknown, formData: FormData) {
   try {
+    await requireAuth();
     const { name, unit_price, group_name } = parseItemForm(formData);
     await createItem(name, unit_price, group_name);
     revalidatePath("/sewa");
@@ -65,6 +75,7 @@ export async function actionCreateItem(_prev: unknown, formData: FormData) {
 
 export async function actionUpdateItem(_prev: unknown, formData: FormData) {
   try {
+    await requireAuth();
     const id = parseInt(String(formData.get("id") ?? "0"), 10);
     const { name, unit_price, group_name } = parseItemForm(formData);
     await updateItem(id, name, unit_price, group_name);
@@ -78,6 +89,7 @@ export async function actionUpdateItem(_prev: unknown, formData: FormData) {
 
 export async function actionDeleteItem(_prev: unknown, formData: FormData) {
   try {
+    await requireAuth();
     const id = parseInt(String(formData.get("id") ?? "0"), 10);
     await deleteItem(id);
     revalidatePath("/sewa");
