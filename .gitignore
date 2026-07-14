@@ -52,3 +52,5 @@ next-env.d.ts
 # brainstorm local
 docs/*
 tasks/*
+# graphify
+/graphify-out/
