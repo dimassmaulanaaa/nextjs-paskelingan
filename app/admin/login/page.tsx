@@ -7,7 +7,7 @@ export default function LoginPage() {
   const [state, formAction, pending] = useActionState(login, null);
 
   return (
-    <main className="mx-auto max-w-sm px-6 py-24">
+    <main id="main-content" className="mx-auto max-w-sm px-6 py-24">
       <h1 className="text-2xl font-semibold">Login Admin</h1>
       <p className="mt-2 text-sm text-zinc-500">
         Dashboard pengurus Karang Taruna Paskelingan.
