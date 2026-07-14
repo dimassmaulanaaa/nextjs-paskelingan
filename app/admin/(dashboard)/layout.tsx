@@ -17,14 +17,14 @@ export default async function AdminLayout({
 
   return (
     <div className="mx-auto max-w-4xl px-6 py-10">
-      <header className="flex items-center justify-between border-b border-zinc-200 pb-4">
-        <span className="font-semibold">Dashboard Admin — {session.username}</span>
+      <header className="flex items-center justify-between border-b border-border pb-4">
+        <span className="font-heading font-semibold">Dashboard Admin — {session.username}</span>
         <div className="flex items-center gap-4 text-sm">
-          <Link href="/" className="text-zinc-600 hover:underline">
+          <Link href="/" className="text-muted-foreground hover:text-foreground hover:underline">
             Lihat Situs
           </Link>
           <form action={logout}>
-            <button className="text-red-600 hover:underline">Logout</button>
+            <button className="text-destructive hover:underline">Logout</button>
           </form>
         </div>
       </header>

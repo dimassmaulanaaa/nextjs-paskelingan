@@ -4,37 +4,35 @@ import { useState, useActionState, useRef } from "react";
 import { type Item, VALID_GROUPS } from "@/lib/catalog-shared";
 import { actionCreateItem, actionUpdateItem, actionDeleteItem } from "../actions";
 import { formatRupiah } from "@/lib/format";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Button } from "@/components/ui/button";
 
 function FormFields({ item }: { item?: Item }) {
   return (
     <>
       <div className="grid gap-3 sm:grid-cols-4">
         <div className="sm:col-span-2">
-          <label className="block text-xs font-medium text-zinc-500 mb-1">Nama Barang</label>
-          <input
-            name="name"
-            defaultValue={item?.name ?? ""}
-            required
-            className="w-full rounded border border-zinc-300 px-2 py-1.5 text-sm"
-          />
+          <Label className="mb-1 text-xs font-medium text-muted-foreground">Nama Barang</Label>
+          <Input name="name" defaultValue={item?.name ?? ""} required className="text-sm" />
         </div>
         <div>
-          <label className="block text-xs font-medium text-zinc-500 mb-1">Harga (Rp)</label>
-          <input
+          <Label className="mb-1 text-xs font-medium text-muted-foreground">Harga (Rp)</Label>
+          <Input
             name="unit_price"
             type="number"
             min={0}
             defaultValue={item?.unit_price ?? ""}
             required
-            className="w-full rounded border border-zinc-300 px-2 py-1.5 text-sm tabular-nums"
+            className="text-sm tabular-nums"
           />
         </div>
         <div>
-          <label className="block text-xs font-medium text-zinc-500 mb-1">Grup</label>
+          <Label className="mb-1 text-xs font-medium text-muted-foreground">Grup</Label>
           <select
             name="group_name"
             defaultValue={item?.group_name ?? VALID_GROUPS[0]}
-            className="w-full rounded border border-zinc-300 px-2 py-1.5 text-sm"
+            className="w-full rounded-md border border-input bg-transparent px-2 py-1.5 text-sm"
           >
             {VALID_GROUPS.map((g) => (
               <option key={g} value={g}>{g}</option>
@@ -51,8 +49,8 @@ function CreateRow() {
   const formRef = useRef<HTMLFormElement>(null);
 
   return (
-    <div className="bg-zinc-50 p-4 rounded-lg border border-zinc-200 mb-8">
-      <h2 className="text-sm font-semibold mb-3">Tambah Barang Baru</h2>
+    <div className="mb-8 rounded-lg border border-border bg-muted p-4">
+      <h2 className="mb-3 text-sm font-semibold">Tambah Barang Baru</h2>
       <form
         action={(data) => {
           formAction(data);
@@ -63,17 +61,13 @@ function CreateRow() {
         <FormFields />
         <div className="mt-3 flex items-center justify-between">
           {state?.error ? (
-            <p className="text-sm text-red-600">{state.error}</p>
+            <p className="text-sm text-destructive">{state.error}</p>
           ) : state?.success ? (
-            <p className="text-sm text-green-600">{state.message}</p>
+            <p className="text-sm text-secondary">{state.message}</p>
           ) : <div />}
-          <button
-            type="submit"
-            disabled={pending}
-            className="rounded bg-green-600 px-4 py-1.5 text-sm font-medium text-white hover:bg-green-700 disabled:opacity-50"
-          >
+          <Button type="submit" size="sm" disabled={pending}>
             {pending ? "Menyimpan..." : "Tambah"}
-          </button>
+          </Button>
         </div>
       </form>
     </div>
@@ -90,40 +84,34 @@ function EditRow({ item, onCancel }: { item: Item; onCancel: () => void }) {
   }
 
   return (
-    <div className="bg-white p-3 rounded-lg border-2 border-green-500 shadow-sm relative -mx-2 z-10 my-2">
+    <div className="relative -mx-2 z-10 my-2 rounded-lg border-2 border-primary bg-card p-3 shadow-sm">
       <form action={formAction}>
         <input type="hidden" name="id" value={item.id} />
         <FormFields item={item} />
-        <div className="mt-3 flex gap-2 justify-end">
+        <div className="mt-3 flex justify-end gap-2">
           {(state?.error || deleteState?.error) && (
-            <span className="text-xs text-red-600 flex-1 self-center">
+            <span className="flex-1 self-center text-xs text-destructive">
               {state?.error || deleteState?.error}
             </span>
           )}
-          <button
-            type="button"
-            onClick={onCancel}
-            className="rounded px-3 py-1.5 text-sm font-medium text-zinc-600 hover:bg-zinc-100"
-          >
+          <Button type="button" variant="ghost" size="sm" onClick={onCancel}>
             Batal
-          </button>
-          <button
+          </Button>
+          <Button
+            variant="ghost"
+            size="sm"
             formAction={deleteAction}
             disabled={pending || deleting}
             onClick={(e) => {
               if (!confirm(`Yakin hapus ${item.name}?`)) e.preventDefault();
             }}
-            className="rounded px-3 py-1.5 text-sm font-medium text-red-600 hover:bg-red-50 disabled:opacity-50"
+            className="text-destructive hover:text-destructive"
           >
             {deleting ? "..." : "Hapus"}
-          </button>
-          <button
-            type="submit"
-            disabled={pending || deleting}
-            className="rounded bg-green-600 px-4 py-1.5 text-sm font-medium text-white hover:bg-green-700 disabled:opacity-50"
-          >
+          </Button>
+          <Button type="submit" size="sm" disabled={pending || deleting}>
             {pending ? "Menyimpan..." : "Simpan"}
-          </button>
+          </Button>
         </div>
       </form>
     </div>
@@ -138,22 +126,22 @@ export function ItemList({ items }: { items: Item[] }) {
       <CreateRow />
 
       {items.length === 0 ? (
-        <div role="status" className="rounded-lg border border-zinc-200 py-12 text-center">
+        <div role="status" className="rounded-lg border border-border py-12 text-center">
           <p className="font-medium">Belum ada barang</p>
-          <p className="mt-1 text-sm text-zinc-500">Tambahkan barang lewat form di atas.</p>
+          <p className="mt-1 text-sm text-muted-foreground">Tambahkan barang lewat form di atas.</p>
         </div>
       ) : (
-        <div className="border border-zinc-200 rounded-lg overflow-hidden overflow-x-auto">
+        <div className="overflow-hidden overflow-x-auto rounded-lg border border-border">
           <table className="w-full text-left text-sm">
-            <thead className="bg-zinc-50 border-b border-zinc-200">
+            <thead className="border-b border-border bg-muted">
               <tr>
                 <th scope="col" className="px-4 py-2 font-medium">Barang</th>
-                <th scope="col" className="px-4 py-2 font-medium text-right">Harga</th>
+                <th scope="col" className="px-4 py-2 text-right font-medium">Harga</th>
                 <th scope="col" className="px-4 py-2 font-medium">Grup</th>
                 <th scope="col" className="px-4 py-2"></th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-zinc-100">
+            <tbody className="divide-y divide-border">
               {items.map((item) =>
                 editingId === item.id ? (
                   <tr key={item.id}>
@@ -164,16 +152,16 @@ export function ItemList({ items }: { items: Item[] }) {
                     </td>
                   </tr>
                 ) : (
-                  <tr key={item.id} className="hover:bg-zinc-50">
+                  <tr key={item.id} className="hover:bg-muted/50">
                     <td className="px-4 py-2 font-medium">{item.name}</td>
-                    <td className="px-4 py-2 text-right tabular-nums text-zinc-600">
+                    <td className="px-4 py-2 text-right tabular-nums text-muted-foreground">
                       {formatRupiah(item.unit_price)}
                     </td>
-                    <td className="px-4 py-2 text-zinc-500">{item.group_name}</td>
+                    <td className="px-4 py-2 text-muted-foreground">{item.group_name}</td>
                     <td className="px-4 py-2 text-right">
                       <button
                         onClick={() => setEditingId(item.id)}
-                        className="text-green-600 hover:underline"
+                        className="text-primary hover:underline"
                       >
                         Edit
                       </button>

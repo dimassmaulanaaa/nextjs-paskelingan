@@ -5,6 +5,17 @@ import { groupItems, type Item } from "@/lib/catalog-shared";
 import { formatRupiah } from "@/lib/format";
 import { hitungSubtotal, hitungTotal, validateRental } from "@/lib/rental";
 import { buildWaMessage, buildWaUrl, type RentalLine } from "@/lib/whatsapp";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Button } from "@/components/ui/button";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 
 export function RentalForm({ items }: { items: Item[] }) {
   const [tanggal, setTanggal] = useState("");
@@ -25,9 +36,9 @@ export function RentalForm({ items }: { items: Item[] }) {
 
   if (groups.length === 0) {
     return (
-      <div role="status" className="mt-10 rounded-lg border border-zinc-200 py-12 text-center">
+      <div role="status" className="mt-10 rounded-lg border border-border py-12 text-center">
         <p className="font-medium">Belum ada barang tersedia</p>
-        <p className="mt-1 text-sm text-zinc-500">
+        <p className="mt-1 text-sm text-muted-foreground">
           Silakan hubungi pengurus untuk informasi ketersediaan.
         </p>
       </div>
@@ -62,10 +73,10 @@ export function RentalForm({ items }: { items: Item[] }) {
     <div>
       {/* Date picker */}
       <div className="mt-8">
-        <label htmlFor="tanggal-sewa" className="block font-medium">
+        <Label htmlFor="tanggal-sewa" className="font-medium">
           Tanggal Sewa
-        </label>
-        <input
+        </Label>
+        <Input
           id="tanggal-sewa"
           type="date"
           min={today}
@@ -74,73 +85,69 @@ export function RentalForm({ items }: { items: Item[] }) {
             setTanggal(e.target.value);
             setError("");
           }}
-          className="mt-1 rounded border border-zinc-300 px-3 py-2"
+          className="mt-1 w-auto"
         />
       </div>
 
       {/* Grup barang */}
       {groups.map((group) => (
         <section key={group.name} className="mt-10">
-          <h2 className="text-xl font-semibold">Sewa {group.name}</h2>
-          <div className="mt-3 overflow-x-auto">
-            <table className="w-full text-left">
-              <thead>
-                <tr className="border-b border-zinc-200 text-sm text-zinc-500">
-                  <th scope="col" className="pb-2">Barang</th>
-                  <th scope="col" className="pb-2 text-right">Harga</th>
-                  <th scope="col" className="pb-2 text-center w-24">Jumlah</th>
-                  <th scope="col" className="pb-2 text-right">Subtotal</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-zinc-100">
+          <h2 className="font-heading text-xl font-semibold">Sewa {group.name}</h2>
+          <div className="mt-3">
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>Barang</TableHead>
+                  <TableHead className="text-right">Harga</TableHead>
+                  <TableHead className="w-24 text-center">Jumlah</TableHead>
+                  <TableHead className="text-right">Subtotal</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
                 {group.items.map((item) => {
                   const qty = qtys[item.id] ?? 0;
                   const sub = hitungSubtotal(item.unit_price, qty);
                   return (
-                    <tr key={item.id}>
-                      <td className="py-2">{item.name}</td>
-                      <td className="py-2 text-right tabular-nums text-zinc-600">
+                    <TableRow key={item.id}>
+                      <TableCell>{item.name}</TableCell>
+                      <TableCell className="text-right tabular-nums text-muted-foreground">
                         {formatRupiah(item.unit_price)}
-                      </td>
-                      <td className="py-2 text-center">
-                        <input
+                      </TableCell>
+                      <TableCell className="text-center">
+                        <Input
                           type="number"
                           min={0}
                           value={qty || ""}
                           placeholder="0"
                           onChange={(e) => setQty(item.id, e.target.value)}
                           aria-label={`Jumlah ${item.name}`}
-                          className="w-20 rounded border border-zinc-300 px-2 py-1 text-center tabular-nums"
+                          className="w-20 text-center tabular-nums"
                         />
-                      </td>
-                      <td className="py-2 text-right tabular-nums">
+                      </TableCell>
+                      <TableCell className="text-right tabular-nums">
                         {sub > 0 ? formatRupiah(sub) : "—"}
-                      </td>
-                    </tr>
+                      </TableCell>
+                    </TableRow>
                   );
                 })}
-              </tbody>
-            </table>
+              </TableBody>
+            </Table>
           </div>
         </section>
       ))}
 
       {/* Sticky summary */}
-      <div className="sticky bottom-0 mt-10 border-t border-zinc-200 bg-white py-4">
+      <div className="sticky bottom-0 mt-10 border-t border-border bg-background py-4">
         <div className="flex items-center justify-between">
           <p className="text-lg font-semibold" aria-live="polite">
             Total: <span className="tabular-nums">{formatRupiah(total)}</span>
           </p>
-          <button
-            type="button"
-            onClick={handleSubmit}
-            className="rounded-lg bg-green-600 px-6 py-3 font-semibold text-white hover:bg-green-700 active:bg-green-800"
-          >
+          <Button type="button" size="lg" onClick={handleSubmit}>
             Ajukan Sewa via WhatsApp
-          </button>
+          </Button>
         </div>
         {error && (
-          <p className="mt-2 text-sm text-red-600" role="alert">
+          <p className="mt-2 text-sm text-destructive" role="alert">
             {error}
           </p>
         )}
