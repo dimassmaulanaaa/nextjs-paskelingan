@@ -2,6 +2,7 @@ import Link from "next/link";
 import { getItems, hargaTerendah } from "@/lib/catalog";
 import { formatRupiah } from "@/lib/format";
 import { ORG, ALAMAT_LENGKAP, jsonLdLocalBusiness } from "@/lib/seo";
+import { SiteHeader } from "./site-header";
 
 // ponytail: teks & foto placeholder pintar (memuat kata kunci lokasi).
 // Pengurus mengganti konten asli ≤ H+30 sesuai spec.
@@ -38,7 +39,9 @@ export default async function Home() {
   const mulai = hargaTerendah(items);
 
   return (
-    <main>
+    <>
+      <SiteHeader />
+      <main id="main-content">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdLocalBusiness()) }}
@@ -163,7 +166,8 @@ export default async function Home() {
       <footer className="border-t border-zinc-200 px-6 py-8 text-center text-sm text-zinc-500">
         © {ORG.foundingDate}–sekarang {ORG.nama}, {ORG.alamat.desa}, Klaten.
       </footer>
-    </main>
+      </main>
+    </>
   );
 }
 

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { getItems } from "@/lib/catalog";
 import { ORG } from "@/lib/seo";
 import { RentalForm } from "./rental-form";
+import { SiteHeader } from "../site-header";
 
 export const metadata: Metadata = {
   title: "Sewa Bolopecah",
@@ -12,13 +13,16 @@ export default async function SewaPage() {
   const items = await getItems();
 
   return (
-    <main className="mx-auto max-w-3xl px-6 py-16">
-      <h1 className="text-3xl font-semibold tracking-tight">Sewa Bolopecah</h1>
-      <p className="mt-4 text-zinc-600">
-        Daftar peralatan hajatan yang disewakan {ORG.nama}, {ORG.alamat.desa},
-        Klaten. Pilih jumlah, lalu ajukan sewa via WhatsApp.
-      </p>
-      <RentalForm items={items} />
-    </main>
+    <>
+      <SiteHeader />
+      <main id="main-content" className="mx-auto max-w-3xl px-6 py-16">
+        <h1 className="text-3xl font-semibold tracking-tight">Sewa Bolopecah</h1>
+        <p className="mt-4 text-zinc-600">
+          Daftar peralatan hajatan yang disewakan {ORG.nama}, {ORG.alamat.desa},
+          Klaten. Pilih jumlah, lalu ajukan sewa via WhatsApp.
+        </p>
+        <RentalForm items={items} />
+      </main>
+    </>
   );
 }
