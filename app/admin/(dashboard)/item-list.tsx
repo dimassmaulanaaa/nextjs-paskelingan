@@ -137,47 +137,54 @@ export function ItemList({ items }: { items: Item[] }) {
     <div>
       <CreateRow />
 
-      <div className="border border-zinc-200 rounded-lg overflow-hidden">
-        <table className="w-full text-left text-sm">
-          <thead className="bg-zinc-50 border-b border-zinc-200">
-            <tr>
-              <th className="px-4 py-2 font-medium">Barang</th>
-              <th className="px-4 py-2 font-medium text-right">Harga</th>
-              <th className="px-4 py-2 font-medium">Grup</th>
-              <th className="px-4 py-2"></th>
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-zinc-100">
-            {items.map((item) => (
-              <tr key={item.id} className="hover:bg-zinc-50">
-                <td colSpan={4} className="p-0">
-                  {editingId === item.id ? (
-                    <div className="px-2">
-                      <EditRow item={item} onCancel={() => setEditingId(null)} />
-                    </div>
-                  ) : (
-                    <div className="flex px-4 py-2 items-center">
-                      <div className="flex-1 font-medium">{item.name}</div>
-                      <div className="w-32 text-right tabular-nums text-zinc-600 pr-6">
-                        {formatRupiah(item.unit_price)}
-                      </div>
-                      <div className="w-48 text-zinc-500">{item.group_name}</div>
-                      <div className="w-16 text-right">
-                        <button
-                          onClick={() => setEditingId(item.id)}
-                          className="text-green-600 hover:underline"
-                        >
-                          Edit
-                        </button>
-                      </div>
-                    </div>
-                  )}
-                </td>
+      {items.length === 0 ? (
+        <div role="status" className="rounded-lg border border-zinc-200 py-12 text-center">
+          <p className="font-medium">Belum ada barang</p>
+          <p className="mt-1 text-sm text-zinc-500">Tambahkan barang lewat form di atas.</p>
+        </div>
+      ) : (
+        <div className="border border-zinc-200 rounded-lg overflow-hidden overflow-x-auto">
+          <table className="w-full text-left text-sm">
+            <thead className="bg-zinc-50 border-b border-zinc-200">
+              <tr>
+                <th scope="col" className="px-4 py-2 font-medium">Barang</th>
+                <th scope="col" className="px-4 py-2 font-medium text-right">Harga</th>
+                <th scope="col" className="px-4 py-2 font-medium">Grup</th>
+                <th scope="col" className="px-4 py-2"></th>
               </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+            </thead>
+            <tbody className="divide-y divide-zinc-100">
+              {items.map((item) =>
+                editingId === item.id ? (
+                  <tr key={item.id}>
+                    <td colSpan={4} className="p-0">
+                      <div className="px-2">
+                        <EditRow item={item} onCancel={() => setEditingId(null)} />
+                      </div>
+                    </td>
+                  </tr>
+                ) : (
+                  <tr key={item.id} className="hover:bg-zinc-50">
+                    <td className="px-4 py-2 font-medium">{item.name}</td>
+                    <td className="px-4 py-2 text-right tabular-nums text-zinc-600">
+                      {formatRupiah(item.unit_price)}
+                    </td>
+                    <td className="px-4 py-2 text-zinc-500">{item.group_name}</td>
+                    <td className="px-4 py-2 text-right">
+                      <button
+                        onClick={() => setEditingId(item.id)}
+                        className="text-green-600 hover:underline"
+                      >
+                        Edit
+                      </button>
+                    </td>
+                  </tr>
+                )
+              )}
+            </tbody>
+          </table>
+        </div>
+      )}
     </div>
   );
 }
