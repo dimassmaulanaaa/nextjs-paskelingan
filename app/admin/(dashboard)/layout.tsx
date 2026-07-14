@@ -16,19 +16,25 @@ export default async function AdminLayout({
   if (!session) redirect("/admin/login");
 
   return (
-    <div className="mx-auto max-w-4xl px-6 py-10">
-      <header className="flex items-center justify-between border-b border-border pb-4">
-        <span className="font-heading font-semibold">Dashboard Admin — {session.username}</span>
-        <div className="flex items-center gap-4 text-sm">
-          <Link href="/" className="text-muted-foreground hover:text-foreground hover:underline">
-            Lihat Situs
-          </Link>
-          <form action={logout}>
-            <button className="text-destructive hover:underline">Logout</button>
-          </form>
+    <div className="min-h-screen bg-muted/20">
+      <header className="sticky top-4 inset-x-4 z-50 pointer-events-none mb-10">
+        <div className="mx-auto flex max-w-5xl items-center justify-between glass-card px-6 py-3 rounded-2xl pointer-events-auto shadow-sm">
+          <span className="font-heading font-bold text-foreground">Admin: {session.username}</span>
+          <div className="flex items-center gap-6 text-sm font-medium">
+            <Link href="/" className="text-muted-foreground hover:text-primary transition-colors">
+              Ke Situs Publik
+            </Link>
+            <form action={logout}>
+              <button className="text-destructive hover:text-destructive/80 transition-colors">Logout</button>
+            </form>
+          </div>
         </div>
       </header>
-      <main id="main-content">{children}</main>
+      <main id="main-content" className="mx-auto max-w-5xl px-6 pb-20 pt-20">
+        <div className="bg-card rounded-2xl shadow-sm border border-border/50 p-6 sm:p-8 reveal">
+          {children}
+        </div>
+      </main>
     </div>
   );
 }

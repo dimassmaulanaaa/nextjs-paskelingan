@@ -11,28 +11,28 @@ import { Button } from "@/components/ui/button";
 function FormFields({ item }: { item?: Item }) {
   return (
     <>
-      <div className="grid gap-3 sm:grid-cols-4">
+      <div className="grid gap-4 sm:grid-cols-4">
         <div className="sm:col-span-2">
-          <Label className="mb-1 text-xs font-medium text-muted-foreground">Nama Barang</Label>
-          <Input name="name" defaultValue={item?.name ?? ""} required className="text-sm" />
+          <Label className="mb-2 text-xs font-semibold text-muted-foreground uppercase tracking-wider block">Nama Barang</Label>
+          <Input name="name" defaultValue={item?.name ?? ""} required className="text-base h-11 rounded-xl bg-background" />
         </div>
         <div>
-          <Label className="mb-1 text-xs font-medium text-muted-foreground">Harga (Rp)</Label>
+          <Label className="mb-2 text-xs font-semibold text-muted-foreground uppercase tracking-wider block">Harga (Rp)</Label>
           <Input
             name="unit_price"
             type="number"
             min={0}
             defaultValue={item?.unit_price ?? ""}
             required
-            className="text-sm tabular-nums"
+            className="text-base tabular-nums h-11 rounded-xl bg-background"
           />
         </div>
         <div>
-          <Label className="mb-1 text-xs font-medium text-muted-foreground">Grup</Label>
+          <Label className="mb-2 text-xs font-semibold text-muted-foreground uppercase tracking-wider block">Grup</Label>
           <select
             name="group_name"
             defaultValue={item?.group_name ?? VALID_GROUPS[0]}
-            className="w-full rounded-md border border-input bg-transparent px-2 py-1.5 text-sm"
+            className="w-full h-11 rounded-xl border border-input bg-background px-3 text-base focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
           >
             {VALID_GROUPS.map((g) => (
               <option key={g} value={g}>{g}</option>
@@ -49,8 +49,8 @@ function CreateRow() {
   const formRef = useRef<HTMLFormElement>(null);
 
   return (
-    <div className="mb-8 rounded-lg border border-border bg-muted p-4">
-      <h2 className="mb-3 text-sm font-semibold">Tambah Barang Baru</h2>
+    <div className="mb-10 rounded-2xl border border-border/50 bg-muted/20 p-6">
+      <h2 className="mb-4 text-lg font-bold">Tambah Barang Baru</h2>
       <form
         action={(data) => {
           formAction(data);
@@ -59,13 +59,13 @@ function CreateRow() {
         ref={formRef}
       >
         <FormFields />
-        <div className="mt-3 flex items-center justify-between">
+        <div className="mt-6 flex items-center justify-between">
           {state?.error ? (
-            <p className="text-sm text-destructive">{state.error}</p>
+            <p className="text-sm font-medium text-destructive bg-destructive/10 px-3 py-1 rounded-md">{state.error}</p>
           ) : state?.success ? (
-            <p className="text-sm text-secondary">{state.message}</p>
+            <p className="text-sm font-medium text-primary bg-primary/10 px-3 py-1 rounded-md">{state.message}</p>
           ) : <div />}
-          <Button type="submit" size="sm" disabled={pending}>
+          <Button type="submit" size="sm" disabled={pending} className="rounded-xl px-6">
             {pending ? "Menyimpan..." : "Tambah"}
           </Button>
         </div>
@@ -84,17 +84,17 @@ function EditRow({ item, onCancel }: { item: Item; onCancel: () => void }) {
   }
 
   return (
-    <div className="relative -mx-2 z-10 my-2 rounded-lg border-2 border-primary bg-card p-3 shadow-sm">
+    <div className="relative -mx-2 z-10 my-2 rounded-2xl border-2 border-primary bg-card p-4 sm:p-5 shadow-lg">
       <form action={formAction}>
         <input type="hidden" name="id" value={item.id} />
         <FormFields item={item} />
-        <div className="mt-3 flex justify-end gap-2">
+        <div className="mt-5 flex justify-end gap-3">
           {(state?.error || deleteState?.error) && (
-            <span className="flex-1 self-center text-xs text-destructive">
+            <span className="flex-1 self-center text-sm font-medium text-destructive bg-destructive/10 px-3 py-1 rounded-md">
               {state?.error || deleteState?.error}
             </span>
           )}
-          <Button type="button" variant="ghost" size="sm" onClick={onCancel}>
+          <Button type="button" variant="outline" size="sm" onClick={onCancel} className="rounded-xl">
             Batal
           </Button>
           <Button
@@ -105,11 +105,11 @@ function EditRow({ item, onCancel }: { item: Item; onCancel: () => void }) {
             onClick={(e) => {
               if (!confirm(`Yakin hapus ${item.name}?`)) e.preventDefault();
             }}
-            className="text-destructive hover:text-destructive"
+            className="text-destructive hover:text-destructive hover:bg-destructive/10 rounded-xl"
           >
             {deleting ? "..." : "Hapus"}
           </Button>
-          <Button type="submit" size="sm" disabled={pending || deleting}>
+          <Button type="submit" size="sm" disabled={pending || deleting} className="rounded-xl px-6">
             {pending ? "Menyimpan..." : "Simpan"}
           </Button>
         </div>
@@ -126,22 +126,22 @@ export function ItemList({ items }: { items: Item[] }) {
       <CreateRow />
 
       {items.length === 0 ? (
-        <div role="status" className="rounded-lg border border-border py-12 text-center">
-          <p className="font-medium">Belum ada barang</p>
-          <p className="mt-1 text-sm text-muted-foreground">Tambahkan barang lewat form di atas.</p>
+        <div role="status" className="rounded-2xl border border-border/50 py-16 text-center bg-muted/20">
+          <p className="font-semibold text-lg">Belum ada barang</p>
+          <p className="mt-2 text-muted-foreground">Tambahkan barang lewat form di atas.</p>
         </div>
       ) : (
-        <div className="overflow-hidden overflow-x-auto rounded-lg border border-border">
+        <div className="overflow-hidden overflow-x-auto rounded-2xl border border-border/50 shadow-sm">
           <table className="w-full text-left text-sm">
-            <thead className="border-b border-border bg-muted">
+            <thead className="border-b border-border/50 bg-muted/30">
               <tr>
-                <th scope="col" className="px-4 py-2 font-medium">Barang</th>
-                <th scope="col" className="px-4 py-2 text-right font-medium">Harga</th>
-                <th scope="col" className="px-4 py-2 font-medium">Grup</th>
-                <th scope="col" className="px-4 py-2"></th>
+                <th scope="col" className="px-6 py-4 font-semibold">Barang</th>
+                <th scope="col" className="px-6 py-4 text-right font-semibold">Harga</th>
+                <th scope="col" className="px-6 py-4 font-semibold">Grup</th>
+                <th scope="col" className="px-6 py-4"></th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-border">
+            <tbody className="divide-y divide-border/50">
               {items.map((item) =>
                 editingId === item.id ? (
                   <tr key={item.id}>
@@ -152,16 +152,20 @@ export function ItemList({ items }: { items: Item[] }) {
                     </td>
                   </tr>
                 ) : (
-                  <tr key={item.id} className="hover:bg-muted/50">
-                    <td className="px-4 py-2 font-medium">{item.name}</td>
-                    <td className="px-4 py-2 text-right tabular-nums text-muted-foreground">
+                  <tr key={item.id} className="hover:bg-muted/30 transition-colors">
+                    <td className="px-6 py-3 font-medium text-base">{item.name}</td>
+                    <td className="px-6 py-3 text-right tabular-nums text-muted-foreground">
                       {formatRupiah(item.unit_price)}
                     </td>
-                    <td className="px-4 py-2 text-muted-foreground">{item.group_name}</td>
-                    <td className="px-4 py-2 text-right">
+                    <td className="px-6 py-3 text-muted-foreground">
+                      <span className="bg-primary/5 text-primary px-2 py-1 rounded-md text-xs font-medium border border-primary/10">
+                        {item.group_name}
+                      </span>
+                    </td>
+                    <td className="px-6 py-3 text-right">
                       <button
                         onClick={() => setEditingId(item.id)}
-                        className="text-primary hover:underline"
+                        className="text-primary font-medium hover:underline px-3 py-1 rounded-md hover:bg-primary/10 transition-colors"
                       >
                         Edit
                       </button>
