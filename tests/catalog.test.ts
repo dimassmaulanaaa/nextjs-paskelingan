@@ -41,7 +41,7 @@ test("hargaTerendah list kosong = 0", () => {
 
 test("CRUD katalog integrasi DB", { timeout: 15000 }, async (t) => {
   if (process.env.RUN_DB_TESTS !== "1") {
-    t.skip("Set RUN_DB_TESTS=1 untuk jalankan test integrasi DB (npm run test:db)");
+    t.skip("Set RUN_DB_TESTS=1 untuk jalankan test integrasi DB (bun run test:db)");
     return;
   }
 

@@ -2,7 +2,7 @@ import { hashPassword } from "../lib/auth.ts";
 
 const plain = process.argv[2];
 if (!plain) {
-  console.error("Pakai: npm run hash-password -- <password>");
+  console.error("Pakai: bun run hash-password -- <password>");
   process.exit(1);
 }
 
