@@ -51,6 +51,8 @@ next-env.d.ts
 
 # brainstorm local
 /tasks/
+/docs/specs/*.md
+!/docs/specs/TEMPLATE.md
 
 # graphify
 /graphify-out/

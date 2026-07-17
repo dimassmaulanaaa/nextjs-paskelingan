@@ -39,10 +39,11 @@ Next.js 16 App Router + React 19, Tailwind v4, shadcn (`base-nova` style, built 
 
 ## Docs workflow
 
-Two doc lifetimes, don't mix them:
+Three doc types, each with different lifetimes and git status:
 
-- **`docs/spec.md`** — permanent, **descriptive**: a mirror of the code that runs now. Code is the source of truth; when code and this doc disagree, the doc is wrong. Refresh it (and `graphify update .`) after a feature merges.
-- **`docs/specs/<fitur>.md`** — throwaway, **prescriptive**: a blueprint for ONE feature, written *before* coding (via `/spec`). It may intentionally disagree with current code because it describes intent. Delete or archive it once the feature is live and folded back into `docs/spec.md`.
+- **`docs/spec.md`** — permanent, **descriptive**, **tracked in git**: a mirror of the code that runs now. Code is the source of truth; when code and this doc disagree, the doc is wrong. Refresh it (and `graphify update .`) after a feature merges.
+- **`docs/ideas/*.md`** — permanent, **tracked in git**: product direction and brainstorm. Update freely; no strict sync with code required.
+- **`docs/specs/<fitur>.md`** — throwaway, **prescriptive**, **local-only (gitignored)**: a blueprint for ONE feature, written *before* coding (via `/spec`). May intentionally disagree with current code. Delete once the feature is live and folded into `docs/spec.md`. Never commit — `.gitignore` excludes `docs/specs/*.md` (except `TEMPLATE.md`).
 
 Feature flow: `/interview-me` → `/spec` (writes `docs/specs/<fitur>.md`) → `/plan` → `/build` → `/review` → after merge: update `docs/spec.md` + `graphify update .` → drop the feature spec. Never treat a `docs/specs/*` file as lasting truth.
 
