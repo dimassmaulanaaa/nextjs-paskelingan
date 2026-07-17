@@ -33,6 +33,8 @@ Next.js 16 App Router + React 19, Tailwind v4, shadcn (`base-nova` style, built 
 2. `app/admin/(dashboard)/layout.tsx` — authoritative `verifySession` on every dashboard render.
 3. `requireAuth()` inside each mutating server action.
 
+**Server action placement** — Colocate actions in `app/<route>/actions.ts` while they serve a single route scope (e.g. `app/admin/actions.ts` is admin-only: login/logout + item CRUD). Keep them thin: auth + parse `FormData` + call `lib/*` + `revalidatePath`. The real logic lives in `lib/` (`lib/catalog.ts`, `lib/auth.ts`), so it's already reusable without sharing the action itself. Only when the *same action* is invoked from two different route scopes, move it to `lib/actions/*.ts`. Don't pre-split on speculation — the public `/sewa` flow does no DB write by design, so admin actions aren't expected to be shared.
+
 **Testing** — `node --test`. Pure modules (`auth`, `catalog-validate`, `format`, `rental`, `seo`, `whatsapp`) always run; `tests/catalog.test.ts` skips its DB cases unless `RUN_DB_TESTS=1`.
 
 ## Docs workflow
