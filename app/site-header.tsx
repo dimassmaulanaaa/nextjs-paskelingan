@@ -98,17 +98,6 @@ export function SiteHeader() {
                       }
                     />
                   ))}
-                  <SheetClose
-                    nativeButton={false}
-                    render={
-                      <Link
-                        href="/sewa"
-                        className="px-4 py-3 rounded-xl text-base font-medium text-foreground hover:bg-muted transition-colors"
-                      >
-                        Katalog Sewa
-                      </Link>
-                    }
-                  />
                 </nav>
                 <div className="px-4 mt-6">
                   <SheetClose
