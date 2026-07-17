@@ -11,7 +11,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - `bun run lint` — ESLint (`eslint-config-next`, flat config in `eslint.config.mjs`)
 - `bun run test` — `node --test`; runs all pure-logic tests in `tests/`. DB integration tests self-skip.
 - `bun run test:db` — `node --env-file=.env --test tests/catalog.test.ts`; sets `RUN_DB_TESTS=1` to un-skip the DB-backed cases. Hits the real Neon DB in `DATABASE_URL`.
-- `bun run db:setup` — apply `db/schema.sql` then `db/seed.sql` to `DATABASE_URL` (seed re-inserts; not idempotent).
+- `bun run db:setup` — apply `db/schema.sql` then `db/seed.sql` to `DATABASE_URL`. Seed uses `ON CONFLICT (name) DO NOTHING`, so re-running is safe (idempotent for inserts) but will **not** update prices/groups of rows that already exist.
 - `bun run hash-password` — generate a scrypt `salt:hash` for `ADMIN_PASSWORD_HASH`.
 
 Run a single test file: `node --test tests/rental.test.ts`. Single case: `node --test --test-name-pattern="<name>"`.
@@ -26,7 +26,7 @@ Next.js 16 App Router + React 19, Tailwind v4, shadcn (`base-nova` style, built 
 
 **Client/server split (important)** — `lib/catalog-shared.ts` is pure and client-safe (types, `validateItemInput`, `groupItems`, `hargaTerendah`, `VALID_GROUPS`) with **zero DB import**. `lib/catalog.ts` is server-only: imports `sql`, does CRUD, and re-exports the shared symbols. Never import `lib/db` (or `lib/catalog`) into a client component — go through `catalog-shared`. `lib/rental.ts` and `lib/whatsapp.ts` are likewise pure calc.
 
-**Public flow** — `/` landing (page-local constants `KEGIATAN`/`PENGURUS`/`FAQ`), `/sewa` rental form. There is **no checkout / DB write from the public side**: the form builds a WhatsApp deep link (`buildWaUrl` → `wa.me/<WA_NUMBER>`) and the order is placed in chat. `getItems()` (server) feeds the catalog; teaser "mulai Rp X" uses `hargaTerendah`.
+**Public flow** — `/` landing, `/sewa` rental form. The landing page (`app/page.tsx`) is composed of section components in `components/landing/*` (`hero`, `stats`, `tentang`, `kegiatan`, `galeri`, `teaser`, `pengurus`, `faq`, `footer`); their copy constants (`KEGIATAN`/`PENGURUS`/`FAQ`) live in `lib/landing-content.ts` (client-safe, no DB). There is **no checkout / DB write from the public side**: the form builds a WhatsApp deep link (`buildWaUrl` → `wa.me/<WA_NUMBER>`) and the order is placed in chat. `getItems()` (server) feeds the catalog; teaser "mulai Rp X" uses `hargaTerendah`. The date field's "today" min comes from `lib/use-today.ts` (`useTodayISO`, a hydration-safe `useSyncExternalStore` — server renders `""`, client fills local today).
 
 **Admin** — `/admin/login` + `/admin/(dashboard)` item CRUD via server actions in `app/admin/actions.ts` (`revalidatePath("/sewa")` and `"/"` after each mutation). Auth is a **single env-defined admin** (no users table): `login()` checks `ADMIN_USERNAME` + `verifyPassword` against `ADMIN_PASSWORD_HASH`, then sets an HMAC-signed session cookie (`signSession`, payload+sig, 8h). Three layers guard admin:
 1. `proxy.ts` — Next 16's renamed middleware (`export function proxy` + `config.matcher`). Optimistic: redirects to login if the session cookie is *absent*. Does not verify.
@@ -34,6 +34,15 @@ Next.js 16 App Router + React 19, Tailwind v4, shadcn (`base-nova` style, built 
 3. `requireAuth()` inside each mutating server action.
 
 **Testing** — `node --test`. Pure modules (`auth`, `catalog-validate`, `format`, `rental`, `seo`, `whatsapp`) always run; `tests/catalog.test.ts` skips its DB cases unless `RUN_DB_TESTS=1`.
+
+## Docs workflow
+
+Two doc lifetimes, don't mix them:
+
+- **`docs/spec.md`** — permanent, **descriptive**: a mirror of the code that runs now. Code is the source of truth; when code and this doc disagree, the doc is wrong. Refresh it (and `graphify update .`) after a feature merges.
+- **`docs/specs/<fitur>.md`** — throwaway, **prescriptive**: a blueprint for ONE feature, written *before* coding (via `/spec`). It may intentionally disagree with current code because it describes intent. Delete or archive it once the feature is live and folded back into `docs/spec.md`.
+
+Feature flow: `/interview-me` → `/spec` (writes `docs/specs/<fitur>.md`) → `/plan` → `/build` → `/review` → after merge: update `docs/spec.md` + `graphify update .` → drop the feature spec. Never treat a `docs/specs/*` file as lasting truth.
 
 ## graphify
 
