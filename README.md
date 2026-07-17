@@ -1,36 +1,47 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Website Karang Taruna Paskelingan
 
-## Getting Started
+Company profile + katalog sewa *bolopecah* (peralatan hajatan) untuk Karang Taruna Paskelingan, Dukuh Keboan Pason, Desa Ceper, Kabupaten Klaten, Jawa Tengah. Pengunjung memilih barang & tanggal di `/sewa`, lalu pengajuan dikirim ke WhatsApp pengurus — tidak ada pembayaran/stok online.
 
-First, run the development server:
+Stack: **Next.js 16** (App Router, RSC, Server Actions) · **React 19** · **TypeScript 5** · **Tailwind v4** · **shadcn** (`base-nova`, di atas `@base-ui/react`) · **Neon Postgres** (`@neondatabase/serverless`). Auth admin & sesi pakai `node:crypto` (nol dependency tambahan).
+
+## Prasyarat
+
+- [Bun](https://bun.sh) `1.3.14` (package manager + task runner). Bodi script memanggil `node`/`next` dengan sengaja — jangan `bun test`, jangan rewrite ke `bun --bun`.
+- File `.env` (lihat **Env** di bawah).
+
+## Mulai
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+bun install
+bun run db:setup        # buat tabel items + seed 15 barang
+bun run dev             # http://localhost:3000
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Script
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+| Perintah | Fungsi |
+| --- | --- |
+| `bun run dev` | Dev server |
+| `bun run build` / `bun run start` | Build produksi / serve |
+| `bun run lint` | ESLint (`eslint-config-next`) |
+| `bun run test` | `node --test` — semua tes logika murni; tes DB self-skip |
+| `bun run test:db` | Tes CRUD katalog terhadap DB nyata (`RUN_DB_TESTS=1`) |
+| `bun run db:setup` | Apply `db/schema.sql` + `db/seed.sql` ke `DATABASE_URL` |
+| `bun run hash-password -- <plain>` | Hasilkan `salt:hash` scrypt untuk `ADMIN_PASSWORD_HASH` |
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Env
 
-## Learn More
+Isi di `.env`:
 
-To learn more about Next.js, take a look at the following resources:
+```
+DATABASE_URL          # Neon connection string
+ADMIN_USERNAME        # username admin tunggal
+ADMIN_PASSWORD_HASH   # scrypt salt:hash (via `bun run hash-password`)
+SESSION_SECRET        # kunci HMAC untuk cookie sesi (≥ 32 byte acak)
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Struktur
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+`app/` — rute publik (`/`, `/sewa`) + admin (`/admin/login`, `/admin/(dashboard)`). `components/landing/*` — section beranda; `components/ui/*` — shadcn. `lib/` — data & logika murni (`catalog-shared` client-safe vs `catalog` server-only; `auth`, `rental`, `whatsapp`, `seo`, `format`). `db/` — `schema.sql` + `seed.sql` (tanpa ORM/tool migrasi). `docs/spec.md` — sumber kebenaran desain.
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Detail arsitektur & aturan kerja: lihat [`CLAUDE.md`](./CLAUDE.md) dan [`docs/spec.md`](./docs/spec.md).
