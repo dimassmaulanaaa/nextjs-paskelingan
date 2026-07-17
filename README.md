@@ -26,7 +26,7 @@ bun run dev             # http://localhost:3000
 | `bun run lint` | ESLint (`eslint-config-next`) |
 | `bun run test` | `node --test` — semua tes logika murni; tes DB self-skip |
 | `bun run test:db` | Tes CRUD katalog terhadap DB nyata (`RUN_DB_TESTS=1`) |
-| `bun run db:setup` | Apply `db/schema.sql` + `db/seed.sql` ke `DATABASE_URL` |
+| `bun run db:setup` | Apply `lib/db/schema.sql` + `lib/db/seed.sql` ke `DATABASE_URL` |
 | `bun run hash-password -- <plain>` | Hasilkan `salt:hash` scrypt untuk `ADMIN_PASSWORD_HASH` |
 
 ## Env

@@ -2,7 +2,7 @@ import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import { sql } from "../lib/db.ts";
 
-const dir = join(import.meta.dirname, "..", "db");
+const dir = join(import.meta.dirname, "..", "lib", "db");
 const schema = readFileSync(join(dir, "schema.sql"), "utf8");
 const seed = readFileSync(join(dir, "seed.sql"), "utf8");
 

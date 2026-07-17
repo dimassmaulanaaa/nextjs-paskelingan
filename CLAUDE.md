@@ -11,7 +11,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - `bun run lint` — ESLint (`eslint-config-next`, flat config in `eslint.config.mjs`)
 - `bun run test` — `node --test`; runs all pure-logic tests in `tests/`. DB integration tests self-skip.
 - `bun run test:db` — `node --env-file=.env --test tests/catalog.test.ts`; sets `RUN_DB_TESTS=1` to un-skip the DB-backed cases. Hits the real Neon DB in `DATABASE_URL`.
-- `bun run db:setup` — apply `db/schema.sql` then `db/seed.sql` to `DATABASE_URL`. Seed uses `ON CONFLICT (name) DO NOTHING`, so re-running is safe (idempotent for inserts) but will **not** update prices/groups of rows that already exist.
+- `bun run db:setup` — apply `lib/db/schema.sql` then `lib/db/seed.sql` to `DATABASE_URL`. Seed uses `ON CONFLICT (name) DO NOTHING`, so re-running is safe (idempotent for inserts) but will **not** update prices/groups of rows that already exist.
 - `bun run hash-password` — generate a scrypt `salt:hash` for `ADMIN_PASSWORD_HASH`.
 
 Run a single test file: `node --test tests/rental.test.ts`. Single case: `node --test --test-name-pattern="<name>"`.
@@ -22,7 +22,7 @@ Env vars (`.env`): `DATABASE_URL` (Neon), `ADMIN_USERNAME`, `ADMIN_PASSWORD_HASH
 
 Next.js 16 App Router + React 19, Tailwind v4, shadcn (`base-nova` style, built on `@base-ui/react` not Radix). Indonesian-language domain: renting *bolopecah* (breakable tableware) for events in Ceper, Klaten.
 
-**Data layer** — Neon serverless Postgres. `lib/db.ts` exports one tagged-template `sql`. Single `items` table (`db/schema.sql`); no ORM, no migrations tool — schema changes go in `schema.sql` + re-run `db:setup`.
+**Data layer** — Neon serverless Postgres. `lib/db.ts` exports one tagged-template `sql`. Single `items` table (`lib/db/schema.sql`); no ORM, no migrations tool — schema changes go in `schema.sql` + re-run `db:setup`.
 
 **Client/server split (important)** — `lib/catalog-shared.ts` is pure and client-safe (types, `validateItemInput`, `groupItems`, `hargaTerendah`, `VALID_GROUPS`) with **zero DB import**. `lib/catalog.ts` is server-only: imports `sql`, does CRUD, and re-exports the shared symbols. Never import `lib/db` (or `lib/catalog`) into a client component — go through `catalog-shared`. `lib/rental.ts` and `lib/whatsapp.ts` are likewise pure calc.
 

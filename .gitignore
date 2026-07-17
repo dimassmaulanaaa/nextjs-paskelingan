@@ -50,7 +50,6 @@ next-env.d.ts
 .claude/settings.local.json
 
 # brainstorm local
-/docs/
 /tasks/
 
 # graphify
