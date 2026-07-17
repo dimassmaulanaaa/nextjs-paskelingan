@@ -1,6 +1,6 @@
 import { getItems, hargaTerendah } from "@/lib/catalog";
 import { jsonLdLocalBusiness } from "@/lib/seo";
-import { SiteHeader } from "./site-header";
+import { SiteHeader } from "@/components/layout/site-header";
 import { Hero } from "@/components/landing/hero";
 import { Stats } from "@/components/landing/stats";
 import { Tentang } from "@/components/landing/tentang";

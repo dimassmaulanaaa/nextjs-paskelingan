@@ -2,7 +2,7 @@
 
 import { useState, useActionState, useRef } from "react";
 import { type Item, VALID_GROUPS } from "@/lib/catalog-shared";
-import { actionCreateItem, actionUpdateItem, actionDeleteItem } from "../actions";
+import { actionCreateItem, actionUpdateItem, actionDeleteItem } from "@/app/admin/actions";
 import { formatRupiah } from "@/lib/format";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";

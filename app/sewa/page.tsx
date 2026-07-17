@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import { getItems } from "@/lib/catalog";
 import { ORG } from "@/lib/seo";
-import { RentalForm } from "./rental-form";
-import { SiteHeader } from "../site-header";
+import { RentalForm } from "@/components/sewa/rental-form";
+import { SiteHeader } from "@/components/layout/site-header";
 
 export const metadata: Metadata = {
   title: "Sewa Bolopecah",

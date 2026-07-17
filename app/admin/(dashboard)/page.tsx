@@ -1,5 +1,5 @@
 import { getItems } from "@/lib/catalog";
-import { ItemList } from "./item-list";
+import { ItemList } from "@/components/admin/item-list";
 
 export default async function AdminDashboard() {
   const items = await getItems();
