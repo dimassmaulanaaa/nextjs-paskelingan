@@ -70,7 +70,8 @@ lib/
                                      VALID_GROUPS, validateItemInput, hargaTerendah, groupItems
   catalog.ts                       → server-only: getItems/createItem/updateItem/deleteItem;
                                      re-export simbol dari catalog-shared
-  landing-content.ts               → konstanta copy beranda (KEGIATAN, PENGURUS, FAQ), client-safe
+  landing-content.ts               → konstanta copy beranda (HERO_FOTO, KEGIATAN, PENGURUS, FAQ,
+                                     GALERI), client-safe
   use-today.ts                     → useTodayISO: useSyncExternalStore hydration-safe
                                      (server "", client → tanggal lokal hari ini) untuk min <input date>
   auth.ts                          → hash/verifyPassword (scrypt salt:hash), sign/verifySession
@@ -137,7 +138,7 @@ Batas penting agar client bundle bebas DB:
 
 ## Alur Publik
 
-`/` beranda RSC menyusun section dari `components/landing/*` dan menyisipkan `<script type="application/ld+json">` LocalBusiness. Teaser "mulai RpX" memakai `hargaTerendah(getItems())`.
+`/` beranda RSC menyusun section dari `components/landing/*` dan menyisipkan `<script type="application/ld+json">` LocalBusiness. Teaser "mulai RpX" memakai `hargaTerendah(getItems())`. Foto hero/pengurus/galeri dihost di Vercel Blob (`rxgs3mtqd5hkxooj.public.blob.vercel-storage.com`), dirender via `next/image` (`next.config.ts` `images.remotePatterns` dibatasi ke path `/{hero,pengurus,galeri}-section/**`); foto hero pertama pakai `preload` untuk LCP.
 
 `/sewa`: RSC memberi `items` ke `RentalForm` (client). Form membentuk `RentalLine[]`, hitung subtotal/total real-time via `lib/rental`. Submit → `validateRental` (tanggal wajib + minimal satu qty ≥ 1) → `buildWaMessage` + `buildWaUrl` → `window.open("wa.me/<WA_NUMBER>?text=…")`. Tidak ada tulis DB dari sisi publik.
 
