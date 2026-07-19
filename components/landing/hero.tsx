@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -8,7 +9,10 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Search } from "lucide-react";
 import { ORG } from "@/lib/seo";
+import { HERO_FOTO } from "@/lib/landing-content";
 import { useTodayISO } from "@/lib/use-today";
+
+const [foto1, foto2, foto3, foto4] = HERO_FOTO;
 
 export function Hero() {
   const router = useRouter();
@@ -84,27 +88,44 @@ export function Hero() {
           style={{ animationDelay: "150ms" }}
         >
           <div className="space-y-4 pt-8">
-            <div className="rounded-2xl overflow-hidden aspect-square bg-muted shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all duration-300">
-              <div className="w-full h-full flex items-center justify-center text-muted-foreground/30 bg-secondary/5">
-                <span className="text-xs">[Foto 1]</span>
-              </div>
+            <div className="relative rounded-2xl overflow-hidden aspect-square bg-muted shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all duration-300">
+              <Image
+                src={foto1.src}
+                alt={foto1.alt}
+                fill
+                preload
+                sizes="(min-width: 1024px) 25vw, 50vw"
+                className="object-cover"
+              />
             </div>
-            <div className="rounded-2xl overflow-hidden aspect-4/5 bg-muted shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all duration-300">
-              <div className="w-full h-full flex items-center justify-center text-muted-foreground/30 bg-primary/5">
-                <span className="text-xs">[Foto 2]</span>
-              </div>
+            <div className="relative rounded-2xl overflow-hidden aspect-4/5 bg-muted shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all duration-300">
+              <Image
+                src={foto2.src}
+                alt={foto2.alt}
+                fill
+                sizes="(min-width: 1024px) 25vw, 50vw"
+                className="object-cover"
+              />
             </div>
           </div>
           <div className="space-y-4">
-            <div className="rounded-2xl overflow-hidden aspect-4/5 bg-muted shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all duration-300">
-              <div className="w-full h-full flex items-center justify-center text-muted-foreground/30 bg-accent/5">
-                <span className="text-xs">[Foto 3]</span>
-              </div>
+            <div className="relative rounded-2xl overflow-hidden aspect-4/5 bg-muted shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all duration-300">
+              <Image
+                src={foto3.src}
+                alt={foto3.alt}
+                fill
+                sizes="(min-width: 1024px) 25vw, 50vw"
+                className="object-cover"
+              />
             </div>
-            <div className="rounded-2xl overflow-hidden aspect-square bg-muted shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all duration-300">
-              <div className="w-full h-full flex items-center justify-center text-muted-foreground/30 bg-secondary/5">
-                <span className="text-xs">[Foto 4]</span>
-              </div>
+            <div className="relative rounded-2xl overflow-hidden aspect-square bg-muted shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all duration-300">
+              <Image
+                src={foto4.src}
+                alt={foto4.alt}
+                fill
+                sizes="(min-width: 1024px) 25vw, 50vw"
+                className="object-cover"
+              />
             </div>
           </div>
         </div>
