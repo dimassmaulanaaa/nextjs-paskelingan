@@ -66,3 +66,6 @@ next-env.d.ts
 
 # graphify
 /graphify-out/
+
+# claude skills
+skills-lock.json
