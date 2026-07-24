@@ -42,6 +42,6 @@ SESSION_SECRET        # kunci HMAC untuk cookie sesi (≥ 32 byte acak)
 
 ## Struktur
 
-`app/` — rute publik (`/`, `/sewa`) + admin (`/admin/login`, `/admin/(dashboard)`). `components/landing/*` — section beranda; `components/ui/*` — shadcn. `lib/` — data & logika murni (`catalog-shared` client-safe vs `catalog` server-only; `auth`, `rental`, `whatsapp`, `seo`, `format`). `db/` — `schema.sql` + `seed.sql` (tanpa ORM/tool migrasi). `docs/spec.md` — sumber kebenaran desain.
+`app/` — rute publik (`/`, `/sewa`) + admin (`/admin/login`, `/admin/(dashboard)`). `components/landing/*` — section beranda; `components/ui/*` — shadcn. `lib/` — data & logika murni (`catalog-shared` client-safe vs `catalog` server-only; `auth`, `rental`, `whatsapp`, `seo`, `format`). `db/` — `schema.sql` + `seed.sql` (tanpa ORM/tool migrasi).
 
-Detail arsitektur & aturan kerja: lihat [`CLAUDE.md`](./CLAUDE.md) dan [`docs/spec.md`](./docs/spec.md).
+Detail arsitektur & aturan kerja: lihat [`CLAUDE.md`](./CLAUDE.md).
