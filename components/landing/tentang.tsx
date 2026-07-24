@@ -7,13 +7,16 @@ export function Tentang() {
         <h2 className="text-3xl md:text-4xl font-bold mb-6">Tentang Kami</h2>
         <div className="space-y-4 text-lg text-muted-foreground leading-relaxed">
           <p>
-            Karang Taruna Paskelingan adalah wadah pemuda dan warga yang berfokus pada kerukunan serta pelayanan masyarakat. Berdiri sejak tahun 2016, kami terus berupaya memberikan manfaat langsung bagi lingkungan sekitar.
+            Karang Taruna Paskelingan adalah wadah pemuda dan warga yang
+            berfokus pada kerukunan serta pelayanan masyarakat. Berdiri sejak
+            tahun 2016, kami terus berupaya memberikan manfaat langsung bagi
+            lingkungan sekitar.
           </p>
           <p>
-            Berpusat di {ALAMAT_LENGKAP}, kami mengelola berbagai kegiatan sosial dan menyediakan layanan sewa bolopecah (peralatan hajatan) yang tepercaya, terjangkau, dan mudah diakses oleh seluruh warga Ceper, Klaten, dan sekitarnya.
-          </p>
-          <p className="text-sm italic mt-8 text-muted-foreground/60">
-            [Catatan: Paragraf di atas adalah teks sementara. Pengurus akan segera memperbarui dengan visi misi resmi Paskelingan.]
+            Berpusat di {ALAMAT_LENGKAP}, kami mengelola berbagai kegiatan
+            sosial dan menyediakan layanan sewa bolopecah (peralatan hajatan)
+            yang tepercaya, terjangkau, dan mudah diakses oleh seluruh warga
+            Ceper, Klaten, dan sekitarnya.
           </p>
         </div>
       </div>
