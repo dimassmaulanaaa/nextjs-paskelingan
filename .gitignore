@@ -59,11 +59,6 @@ next-env.d.ts
 .claude/settings.local.json
 .claude/.stop-hook-guard.json
 
-# brainstorm local
-/tasks/
-/docs/specs/*.md
-!/docs/specs/TEMPLATE.md
-
 # graphify
 /graphify-out/
 
