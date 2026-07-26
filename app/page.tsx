@@ -1,4 +1,4 @@
-import { getItems, hargaTerendah } from "@/lib/catalog";
+import { getItems, lowestPrice } from "@/lib/catalog";
 import { jsonLdLocalBusiness } from "@/lib/seo";
 import { SiteHeader } from "@/components/layout/site-header";
 import { Hero } from "@/components/landing/hero";
@@ -13,7 +13,7 @@ import { Footer } from "@/components/landing/footer";
 
 export default async function Home() {
   const items = await getItems();
-  const mulai = hargaTerendah(items);
+  const start = lowestPrice(items);
 
   return (
     <>
@@ -21,15 +21,17 @@ export default async function Home() {
       <main id="main-content">
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdLocalBusiness()) }}
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(jsonLdLocalBusiness()),
+          }}
         />
 
         <Hero />
-        <Stats hargaTerendah={mulai} />
+        <Stats lowestPrice={start} />
         <Tentang />
         <Kegiatan />
         <Galeri />
-        <Teaser hargaTerendah={mulai} />
+        <Teaser lowestPrice={start} />
         <Pengurus />
         <FaqSection />
       </main>

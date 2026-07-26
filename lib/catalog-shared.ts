@@ -10,25 +10,32 @@ export type Item = {
 
 export type ItemGroup = { name: string; items: Item[] };
 
-export const VALID_GROUPS = ["Peralatan Makan", "Wadah & Minum", "Perabot"] as const;
+export const VALID_GROUPS = [
+  "Peralatan Makan",
+  "Wadah & Minum",
+  "Perabot",
+] as const;
 
-export type ValidationResult = { valid: true } | { valid: false; error: string };
+export type ValidationResult =
+  | { valid: true }
+  | { valid: false; error: string };
 
 export function validateItemInput(
   name: string,
   price: number,
   group: string,
 ): ValidationResult {
-  if (!name.trim()) return { valid: false, error: "Nama barang tidak boleh kosong." };
+  if (!name.trim())
+    return { valid: false, error: "Nama barang tidak boleh kosong." };
   if (!Number.isInteger(price) || price < 0)
     return { valid: false, error: "Harga harus berupa bilangan bulat ≥ 0." };
-  if (!VALID_GROUPS.includes(group as typeof VALID_GROUPS[number]))
+  if (!VALID_GROUPS.includes(group as (typeof VALID_GROUPS)[number]))
     return { valid: false, error: "Pilih grup barang yang valid." };
   return { valid: true };
 }
 
 // Harga satuan terendah di katalog (untuk teaser "mulai RpX"). 0 bila kosong.
-export function hargaTerendah(items: Item[]): number {
+export function lowestPrice(items: Item[]): number {
   if (items.length === 0) return 0;
   return Math.min(...items.map((i) => i.unit_price));
 }

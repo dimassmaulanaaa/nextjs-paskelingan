@@ -2,7 +2,7 @@ import { sql } from "./db.ts";
 import { validateItemInput, type Item } from "./catalog-shared.ts";
 
 export type { Item, ItemGroup } from "./catalog-shared.ts";
-export { groupItems, hargaTerendah, VALID_GROUPS } from "./catalog-shared.ts";
+export { groupItems, lowestPrice, VALID_GROUPS } from "./catalog-shared.ts";
 
 export async function getItems(): Promise<Item[]> {
   return (await sql`
