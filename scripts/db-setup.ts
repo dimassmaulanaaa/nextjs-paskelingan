@@ -10,4 +10,4 @@ await sql.query(schema);
 await sql.query(seed);
 
 const [{ count }] = await sql.query("SELECT count(*)::int AS count FROM items");
-console.log(`db:setup selesai — ${count} barang di katalog.`);
+console.log(`db:setup complete — ${count} items in the catalog.`);
