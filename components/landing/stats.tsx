@@ -1,6 +1,6 @@
 import { formatRupiah } from "@/lib/format";
 
-export function Stats({ hargaTerendah }: { hargaTerendah: number }) {
+export function Stats({ lowestPrice }: { lowestPrice: number }) {
   return (
     <section className="border-y border-border/50 bg-muted/30">
       <div className="mx-auto max-w-6xl px-6 py-10">
@@ -18,7 +18,7 @@ export function Stats({ hargaTerendah }: { hargaTerendah: number }) {
             <p className="text-sm font-medium text-muted-foreground uppercase tracking-wider">Area Layanan</p>
           </div>
           <div className="reveal hidden md:block" style={{ animationDelay: "300ms" }}>
-            <p className="text-3xl sm:text-4xl font-bold text-primary mb-2">{hargaTerendah ? formatRupiah(hargaTerendah) : "Rp100"}</p>
+            <p className="text-3xl sm:text-4xl font-bold text-primary mb-2">{lowestPrice ? formatRupiah(lowestPrice) : "Rp100"}</p>
             <p className="text-sm font-medium text-muted-foreground uppercase tracking-wider">Harga Mulai</p>
           </div>
         </div>

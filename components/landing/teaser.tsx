@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { formatRupiah } from "@/lib/format";
 import { ArrowRight } from "lucide-react";
 
-export function Teaser({ hargaTerendah }: { hargaTerendah: number }) {
+export function Teaser({ lowestPrice }: { lowestPrice: number }) {
   return (
     <section className="py-20 px-6 relative overflow-hidden bg-primary text-primary-foreground">
       <div className="aurora-bg absolute inset-0 opacity-20" />
@@ -15,9 +15,10 @@ export function Teaser({ hargaTerendah }: { hargaTerendah: number }) {
           Sewa Bolopecah untuk Segala Kebutuhan Hajatan
         </h2>
         <p className="text-xl opacity-90 mb-10 max-w-2xl mx-auto">
-          Dari piring, gelas, hingga tikar dan kursi. Harga terjangkau mulai dari{" "}
+          Dari piring, gelas, hingga tikar dan kursi. Harga terjangkau mulai
+          dari{" "}
           <strong className="text-white bg-accent px-2 py-1 rounded-md">
-            {hargaTerendah ? formatRupiah(hargaTerendah) : "Rp100"}
+            {lowestPrice ? formatRupiah(lowestPrice) : "Rp100"}
           </strong>{" "}
           per biji.
         </p>
