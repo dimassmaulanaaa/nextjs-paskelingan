@@ -103,6 +103,7 @@ export function Hero() {
                 src={foto2.src}
                 alt={foto2.alt}
                 fill
+                preload
                 sizes="(min-width: 1024px) 25vw, 50vw"
                 className="object-cover"
               />
@@ -114,6 +115,7 @@ export function Hero() {
                 src={foto3.src}
                 alt={foto3.alt}
                 fill
+                preload
                 sizes="(min-width: 1024px) 25vw, 50vw"
                 className="object-cover"
               />
@@ -123,6 +125,7 @@ export function Hero() {
                 src={foto4.src}
                 alt={foto4.alt}
                 fill
+                preload
                 sizes="(min-width: 1024px) 25vw, 50vw"
                 className="object-cover"
               />
