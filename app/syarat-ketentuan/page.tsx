@@ -53,22 +53,26 @@ export default function SyaratKetentuanPage() {
             Syarat & Ketentuan
           </h1>
           <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-            Aturan sewa bolopecah {ORG.nama}, {ORG.alamat.desa}. Nominal dan durasi di bawah
-            masih berupa placeholder dan akan diperbarui oleh pengurus.
+            Aturan sewa bolopecah {ORG.nama}, {ORG.alamat.desa}. Nominal dan
+            durasi di bawah masih berupa placeholder dan akan diperbarui oleh
+            pengurus.
           </p>
         </div>
 
         <div className="space-y-8">
           {KETENTUAN.map((k) => (
             <div key={k.judul}>
-              <h2 className="font-heading text-xl font-semibold mb-2">{k.judul}</h2>
+              <h2 className="font-heading text-xl font-semibold mb-2">
+                {k.judul}
+              </h2>
               <p className="text-muted-foreground leading-relaxed">{k.isi}</p>
             </div>
           ))}
         </div>
 
         <p className="text-sm text-muted-foreground mt-16 pt-8 border-t">
-          Alamat: {ALAMAT_LENGKAP}. Hubungi kami via WhatsApp untuk pertanyaan lebih lanjut.
+          Alamat: {ALAMAT_LENGKAP}. Hubungi kami via WhatsApp untuk pertanyaan
+          lebih lanjut.
         </p>
       </main>
     </>

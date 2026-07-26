@@ -76,8 +76,12 @@ export function Footer() {
             &copy; 2016–{new Date().getFullYear()} Karang Taruna Paskelingan.
           </p>
           <div className="flex gap-6">
-            <a href="#" className="hover:text-white transition-colors">Privasi</a>
-            <a href="#" className="hover:text-white transition-colors">Syarat & Ketentuan</a>
+            <Link
+              href="/syarat-ketentuan"
+              className="hover:text-white transition-colors"
+            >
+              Syarat & Ketentuan
+            </Link>
           </div>
         </div>
       </div>
