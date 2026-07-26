@@ -2,9 +2,10 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { ORG } from "@/lib/seo";
 import { ModeToggle } from "@/components/mode-toggle";
-import { PartyPopper, Menu } from "lucide-react";
+import { Menu } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Sheet,
@@ -30,8 +31,13 @@ export function SiteHeader() {
           href="/"
           className="font-heading text-lg font-bold text-foreground flex items-center gap-2 hover:opacity-80 transition-opacity"
         >
-          <PartyPopper className="w-5 h-5 text-primary" />
-          {ORG.nama}
+          <Image
+            src="https://rxgs3mtqd5hkxooj.public.blob.vercel-storage.com/brand/paskelingan-logo-main.png"
+            alt="Logo Karang Taruna Paskelingan"
+            width={80}
+            height={80}
+            className="size-10"
+          />
         </Link>
 
         <div className="flex items-center gap-4 md:gap-6">
@@ -77,7 +83,13 @@ export function SiteHeader() {
                 className="w-72 bg-background/95 backdrop-blur-xl"
               >
                 <SheetTitle className="px-6 pt-6 flex items-center gap-2 text-lg">
-                  <PartyPopper className="w-5 h-5 text-primary" />
+                  <Image
+                    src="https://rxgs3mtqd5hkxooj.public.blob.vercel-storage.com/brand/paskelingan-logo-main.png"
+                    alt=""
+                    width={20}
+                    height={20}
+                    className="w-5 h-5"
+                  />
                   {ORG.nama}
                 </SheetTitle>
                 <nav
