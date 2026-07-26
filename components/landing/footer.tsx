@@ -1,6 +1,7 @@
 import { ALAMAT_LENGKAP } from "@/lib/seo";
 import { MapPin, Phone, MessageCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 export function Footer() {
   return (
@@ -75,12 +76,8 @@ export function Footer() {
             &copy; 2016–{new Date().getFullYear()} Karang Taruna Paskelingan.
           </p>
           <div className="flex gap-6">
-            <a href="#" className="hover:text-white transition-colors">
-              Privasi
-            </a>
-            <a href="#" className="hover:text-white transition-colors">
-              Syarat & Ketentuan
-            </a>
+            <a href="#" className="hover:text-white transition-colors">Privasi</a>
+            <a href="#" className="hover:text-white transition-colors">Syarat & Ketentuan</a>
           </div>
         </div>
       </div>
