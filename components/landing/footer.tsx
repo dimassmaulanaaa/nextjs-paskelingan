@@ -57,21 +57,40 @@ export function Footer() {
             <h3 className="text-xl font-semibold text-white">
               Kontak & Lokasi
             </h3>
-            <div className="flex gap-4 text-slate-300">
+            <a
+              href="https://maps.app.goo.gl/Y2fidoeckYYkESR27"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex gap-4 text-slate-300 hover:text-white transition-colors"
+            >
               <MapPin className="w-6 h-6 shrink-0 text-accent" />
               <p className="leading-relaxed">{ALAMAT_LENGKAP}</p>
-            </div>
-            <div className="flex gap-4 items-center text-slate-300">
+            </a>
+            <a
+              href="https://wa.me/6285848108242"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex gap-4 items-center text-slate-300 hover:text-white transition-colors"
+            >
               <Phone className="w-6 h-6 shrink-0 text-accent" />
-              <p>+62 878-8919-8491</p>
-            </div>
+              <p>+62 858-4810-8242 (Mas Depa Admin Paskelingan)</p>
+            </a>
+            <a
+              href="https://wa.me/6287889198491"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex gap-4 items-center text-slate-300 hover:text-white transition-colors"
+            >
+              <Phone className="w-6 h-6 shrink-0 text-accent" />
+              <p>+62 878-8919-8491 (Mas Dimas Admin Bolopecah)</p>
+            </a>
             <Button
               size="lg"
               className="w-full sm:w-auto h-12 rounded-xl bg-[#25D366] hover:bg-[#20bd5a] text-white border-none mt-4"
               nativeButton={false}
               render={
                 <a
-                  href="https://wa.me/6287889198491"
+                  href="https://wa.me/6285848108242"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
