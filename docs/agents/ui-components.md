@@ -34,7 +34,7 @@ Fonts: `font-sans` (Work Sans, body default), `font-heading` (Outfit, auto-appli
 Every primitive follows this shape — match it exactly for new ones:
 
 - Function component, PascalCase, same name as the file's default export intent (`Button`, `Badge`, `Card`...).
-- `data-slot="<name>"` attribute on the root element (styling hook + a11y/debugging convention already used everywhere).
+- `data-slot="<name>"` attribute on the root element (styling hook + a11y/debugging convention used by most primitives — `button`, `input`, `label`, `card`, `table`, `dropdown-menu`, `accordion`, `avatar`, `separator`, `sheet`). `badge` is the exception: it's built on `useRender()` and passes the slot via `state: { slot: "<name>", ... }` instead of a `data-slot` DOM attribute — match whichever pattern your new primitive's base fits.
 - Props: `React.ComponentProps<"tag">` (or the base-ui primitive's `.Props`) spread with `{...props}` last.
 - Class list built with `cn(...)`, caller's `className` merged in last.
 - Variants (only when the component actually has visual variants) via `cva`, exported alongside the component: `export { Button, buttonVariants }`.
