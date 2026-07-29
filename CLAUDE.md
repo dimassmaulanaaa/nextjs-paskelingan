@@ -32,6 +32,10 @@ Next.js 16 App Router + React 19, Tailwind v4, shadcn (`base-nova` style, built 
 
 **Public flow** — `/` landing, `/sewa` rental form. The landing page (`app/page.tsx`) is composed of section components in `components/landing/*` (`hero`, `stats`, `tentang`, `kegiatan`, `galeri`, `teaser`, `pengurus`, `faq`, `footer`); their copy constants (`KEGIATAN`/`PENGURUS`/`FAQ`) live in `lib/landing-content.ts` (client-safe, no DB). There is **no checkout / DB write from the public side**: the form builds a WhatsApp deep link (`buildWaUrl` → `wa.me/<WA_NUMBER>`) and the order is placed in chat. `getItems()` (server) feeds the catalog; teaser "mulai Rp X" uses `lowestPrice`. The date field's "today" min comes from `lib/use-today.ts` (`useTodayISO`, a hydration-safe `useSyncExternalStore` — server renders `""`, client fills local today).
 
+`/syarat-ketentuan` is a static terms page; its copy (`KETENTUAN`) lives in `lib/syarat-ketentuan-content.ts` (client-safe, no DB), linked from the footer.
+
+**SEO** — `lib/seo.ts` (client-safe, no DB) holds `SITE_URL`, `ORG`, `KEYWORDS`, `ALAMAT_LENGKAP`, and `jsonLdLocalBusiness()` (LocalBusiness JSON-LD). It feeds `app/sitemap.ts` and `app/robots.ts` (robots allows `/`, disallows `/admin`). Covered by `seo.test.ts`.
+
 **Admin** — `/admin/login` + `/admin/(dashboard)` item CRUD via server actions in `app/admin/actions.ts` (`revalidatePath("/sewa")` and `"/"` after each mutation). Auth is a **single env-defined admin** (no users table): `login()` checks `ADMIN_USERNAME` + `verifyPassword` against `ADMIN_PASSWORD_HASH`, then sets an HMAC-signed session cookie (`signSession`, payload+sig, 8h). Three layers guard admin:
 
 1. `proxy.ts` — Next 16's renamed middleware (`export function proxy` + `config.matcher`). Optimistic: redirects to login if the session cookie is _absent_. Does not verify.
@@ -69,4 +73,4 @@ Default vocabulary (needs-triage, needs-info, ready-for-agent, ready-for-human, 
 
 ### Domain docs
 
-Single-context layout — `CONTEXT.md` + `docs/adr/` at root. See `docs/agents/domain.md`.
+Single-context layout. `CONTEXT.md` + `docs/adr/` at root are created lazily (may not exist yet); proceed silently if absent. See `docs/agents/domain.md`.
