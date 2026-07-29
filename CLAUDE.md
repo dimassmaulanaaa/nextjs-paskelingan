@@ -74,3 +74,7 @@ Default vocabulary (needs-triage, needs-info, ready-for-agent, ready-for-human, 
 ### Domain docs
 
 Single-context layout. `CONTEXT.md` + `docs/adr/` at root are created lazily (may not exist yet); proceed silently if absent. See `docs/agents/domain.md`.
+
+### UI components
+
+Stack (shadcn `base-nova` on `@base-ui/react`, Tailwind v4, `cva`, `cn()`), token layers, and composition conventions to keep new components consistent with existing ones. See `docs/agents/ui-components.md`.
